@@ -25,7 +25,7 @@ public class CutterLauncher {
     private String range;
 
     public static void main(String[] args) {
-        new CutterLauncher().launch(args);
+        new CutterLauncher().launch(args) ;
     }
 
     private void launch(String[] args) {
