@@ -25,6 +25,7 @@ public class CutterLauncher {
 
     @Argument(required = true, metaVar = "range", index = 1, usage = "range of cutting")
     private String range;
+    //я как-то неправильно использую его или почему он не подсвечен?
 
     public static void main(String[] args) {
         new CutterLauncher().launch(args) ;
@@ -43,10 +44,10 @@ public class CutterLauncher {
         }
         try {
             String[] r = range.split("-");
-            int opening;
-            int ending;
-            boolean isEnd;
-            boolean isStart;
+            int opening = 0;
+            int ending = 0;
+            boolean isEnd = false;
+            boolean isStart = false;
                 /* в r будет хранится либо
                 1)число, число, тогда оба использую как начало и конец
                 2)пустота,число, тогда первое ставлю стандартным, второе конец
@@ -65,8 +66,12 @@ public class CutterLauncher {
                     opening = Integer.parseInt(r[0]);
                     isStart = true;
                 }
+            //не очень пока понимаю как должен выглядеть конструктор и где он должен объявляться
+            Cutter cutter = new Cutter(charsetInput,charsetOutput,symbol,isEnd,isStart,opening,ending)
         }
-        catch (IOException e) {
+        try {
+            int result = recoder.recode(inputFileName, outputFileName);
+        } catch (IOException e) {
             System.err.println(e.getMessage());
         }
     }

@@ -24,51 +24,44 @@ public class Cutter {
         this.opening = opening;
         this.ending = ending;
     }
+//вроде неправильно создан конструктор. но как мне всякие isEnd объявить, если их значения в лаунчере задаются?
 
-    public String cutting(String lines, boolean symbol, boolean isEnd, boolean isStart){
+    public String cutting(String lines, boolean symbol, boolean isEnd, boolean isStart) {
         int start;
         int end;
         //значения начала и конца могут не подаваться в метод, поэтому нужно записать их вот так
         StringBuilder line = new StringBuilder();
-        if (symbol){
-            if ((isEnd&&isStart)&&(opening<line.length())&&(ending<line.length())){
+        if (symbol) {
+            if ((isEnd && isStart) && (opening < line.length()) && (ending < line.length())) {
                 //если есть начало и конец
                 start = opening;
                 end = ending;
-                }
-            else if ((isEnd&&!isStart)&&(ending<line.length())){
+            } else if ((isEnd && !isStart) && (ending < line.length())) {
                 //только конец
                 start = 0;
                 end = ending;
-            }
-            else if ((!isEnd&&isStart)&&(opening<line.length())){
+            } else if ((!isEnd && isStart) && (opening < line.length())) {
                 //только начало
                 start = opening;
-                end = lines.length()-1;
-            }
-            else return null; //ничео не возвращаем если не попали в нужное условие
-            //или нужно пустую строку ретернить?
-            line.append(lines,start,end);
+                end = lines.length() - 1;
+            } else return null;
+            line.append(lines, start, end);
             //append сказал что можно без цикла, а я и не против
-        }
-        else{
+        } else {
             String[] listOfWords = lines.split(" ");
             //теперь не по буквам, а по словам
-            if ((isEnd&&isStart)&&(opening< listOfWords.length)&&(ending<listOfWords.length)){
+            if ((isEnd && isStart) && (opening < listOfWords.length) && (ending < listOfWords.length)) {
                 start = opening;
                 end = ending;
-            }
-            else if ((isEnd&&!isStart)&&(ending<listOfWords.length)){
+            } else if ((isEnd && !isStart) && (ending < listOfWords.length)) {
                 start = 0;
                 end = ending;
-            }
-            else if ((!isEnd&&isStart)&&(opening<listOfWords.length)){
+            } else if ((!isEnd && isStart) && (opening < listOfWords.length)) {
                 start = opening;
-                end = lines.length()-1;
-            }
-            else return null;
+                end = lines.length() - 1;
+            } else return null;
             //для того чтобы избежать копипасты я в if объявляю значения начала и конца, а потом просто по ним двигаюсь
-            while (start>=end){
+            while (start >= end) {
                 line.append(listOfWords[start]);
                 start++;
             }
@@ -76,27 +69,33 @@ public class Cutter {
         return line.toString();
     }
 
-    //текст читается по строкам, поэтому создаю лист строк
-    public ArrayList<String> recode(InputStream in, OutputStream out,String inputName) throws IOException {
+    public void recode(InputStream in, OutputStream out) throws IOException {
         try (InputStreamReader reader = new InputStreamReader(in, charsetInput)) {
             try (OutputStreamWriter writer = new OutputStreamWriter(out, charsetOutput)) {
-                ArrayList<String> text = new ArrayList<>();
                 BufferedReader bufRead = new BufferedReader(reader);
+                BufferedWriter bufWrite = new BufferedWriter(writer);
                 String buf = bufRead.readLine();
                 while (buf != null) {
-                    text.add(cutting(buf, symbol, isEnd, isStart));
+                    bufWrite.write(cutting(buf, symbol, isEnd, isStart));
+                    bufWrite.newLine();
+                    //мне же нужно ето или он автоматом перехдит?
+                    //убрал лист, понял что есть же writer
                     buf = bufRead.readLine();
                 }
-                return text;
-            }
-        }
-    }
-    public int recode(String inputName, String outputName) throws IOException {
-        try (FileInputStream inputStream = new FileInputStream(inputName)) {
-            try (FileOutputStream outputStream = new FileOutputStream(outputName)) {
-                return recode(inputStream, outputStream);
             }
         }
     }
 
+    public void recode(String inputName, String outputName) throws IOException {
+        //if (inputName.equals(""))
+
+        //пока не понимаю, как поставить условие так, чтобы можно было вводить/выводить текст с консоли.
+        //и будет ли такой способ (как в примере) работать
+
+        try (FileInputStream inputStream = new FileInputStream(inputName)) {
+            try (FileOutputStream outputStream = new FileOutputStream(outputName)) {
+                recode(inputStream, outputStream);
+            }
+        }
+    }
 }
