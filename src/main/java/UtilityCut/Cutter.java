@@ -26,7 +26,7 @@ public class Cutter {
     }
 //вроде неправильно создан конструктор. но как мне всякие isEnd объявить, если их значения в лаунчере задаются?
 
-    public String cutting(String lines, boolean symbol, boolean isEnd, boolean isStart) {
+    public String cutting(String lines) {
         int start;
         int end;
         //значения начала и конца могут не подаваться в метод, поэтому нужно записать их вот так
@@ -76,7 +76,7 @@ public class Cutter {
                 BufferedWriter bufWrite = new BufferedWriter(writer);
                 String buf = bufRead.readLine();
                 while (buf != null) {
-                    bufWrite.write(cutting(buf, symbol, isEnd, isStart));
+                    bufWrite.write(cutting(buf));
                     bufWrite.newLine();
                     //мне же нужно ето или он автоматом перехдит?
                     //убрал лист, понял что есть же writer

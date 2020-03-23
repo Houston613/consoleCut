@@ -7,7 +7,6 @@ import org.kohsuke.args4j.CmdLineParser;
 import org.kohsuke.args4j.Option;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class CutterLauncher {
 
@@ -25,7 +24,9 @@ public class CutterLauncher {
 
     @Argument(required = true, metaVar = "range", index = 1, usage = "range of cutting")
     private String range;
-    //я как-то неправильно использую его или почему он не подсвечен?
+
+    //как правильно указывать все ето? через конструктор в каттере ведь?
+    //но что делать с всякими переменными, получаемыми из  range?
 
     public static void main(String[] args) {
         new CutterLauncher().launch(args) ;
@@ -66,11 +67,11 @@ public class CutterLauncher {
                     opening = Integer.parseInt(r[0]);
                     isStart = true;
                 }
+            if (w)
+                c = false;
             //не очень пока понимаю как должен выглядеть конструктор и где он должен объявляться
             Cutter cutter = new Cutter(charsetInput,charsetOutput,symbol,isEnd,isStart,opening,ending)
-        }
-        try {
-            int result = recoder.recode(inputFileName, outputFileName);
+
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
