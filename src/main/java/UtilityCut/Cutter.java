@@ -1,12 +1,8 @@
 package UtilityCut;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Cutter {
-    private final String charsetInput;
-    private final String charsetOutput;
     private boolean symbol;
     //если флаг -w - true, то работа посимвольно
     private boolean isEnd;
@@ -14,65 +10,67 @@ public class Cutter {
     private int opening;
     private int ending;
 
-    public Cutter(String charsetInput, String charsetOutput,
-                  boolean symbol, boolean isEnd, boolean isStart, int opening, int ending) {
-        this.charsetInput = charsetInput;
-        this.charsetOutput = charsetOutput;
-        this.symbol = symbol;
-        this.isEnd = isEnd;
-        this.isStart = isStart;
-        this.opening = opening;
-        this.ending = ending;
-    }
 //вроде неправильно создан конструктор. но как мне всякие isEnd объявить, если их значения в лаунчере задаются?
-
-    public String cutting(String lines) {
+    public int checker(int length,boolean check){
         int start;
         int end;
+        if ((isEnd && isStart) && (opening < length)){
+            start = opening;
+                if (ending < length)
+                    end = ending;
+                else
+                    end = length-1;
+        } else if ((isEnd && !isStart)) {
+            start = 0;
+            if (ending < length)
+                end = ending;
+            else
+                end = length-1;
+        } else if ((!isEnd && isStart) && (opening < length)) {
+            start = opening;
+            end = length - 1;
+        } else {
+            end = -1;
+            start =-1;
+            //null я не могу нормально возвращать, но думаю и так сойдет
+            //такой случай может быть только если границы меньше
+            //всякие исключения еще "на подходе" отпадут и тут будут только числа
+            //если нет границ, добавляю целую строку
+        }
+        if (check)
+            return start;
+        else return end;
+    }
+
+    public String cutting(String lines) {
         //значения начала и конца могут не подаваться в метод, поэтому нужно записать их вот так
         StringBuilder line = new StringBuilder();
+        int length;
         if (symbol) {
-            if ((isEnd && isStart) && (opening < line.length()) && (ending < line.length())) {
-                //если есть начало и конец
-                start = opening;
-                end = ending;
-            } else if ((isEnd && !isStart) && (ending < line.length())) {
-                //только конец
-                start = 0;
-                end = ending;
-            } else if ((!isEnd && isStart) && (opening < line.length())) {
-                //только начало
-                start = opening;
-                end = lines.length() - 1;
-            } else return null;
-            line.append(lines, start, end);
+            length = lines.length();
+            if ((checker(length,true)==-1)||(checker(length,false)==-1))
+                line.append(lines);
+            else
+            line.append(lines,checker(length,true),checker(length,false));
             //append сказал что можно без цикла, а я и не против
         } else {
             String[] listOfWords = lines.split(" ");
-            //теперь не по буквам, а по словам
-            if ((isEnd && isStart) && (opening < listOfWords.length) && (ending < listOfWords.length)) {
-                start = opening;
-                end = ending;
-            } else if ((isEnd && !isStart) && (ending < listOfWords.length)) {
-                start = 0;
-                end = ending;
-            } else if ((!isEnd && isStart) && (opening < listOfWords.length)) {
-                start = opening;
-                end = lines.length() - 1;
-            } else return null;
-            //для того чтобы избежать копипасты я в if объявляю значения начала и конца, а потом просто по ним двигаюсь
-            while (start >= end) {
-                line.append(listOfWords[start]);
-                start++;
+            length = listOfWords.length;
+            while (checker(length,true) >= checker(length,false)) {
+                line.append(listOfWords[checker(length,false)]);
+                length--;
+                //добавяю с конца, checker(length,false) будет каждый раз уменьшаться
             }
         }
         return line.toString();
     }
 
     public void recode(InputStream in, OutputStream out) throws IOException {
-        try (InputStreamReader reader = new InputStreamReader(in, charsetInput)) {
-            try (OutputStreamWriter writer = new OutputStreamWriter(out, charsetOutput)) {
+        try (InputStreamReader reader = new InputStreamReader(in)){
+            PrintStream out = new PrintStream(new File("output.txt"))
+            try (OutputStreamWriter writer = new OutputStreamWriter(out)) {
                 BufferedReader bufRead = new BufferedReader(reader);
+                //вот тут неймы или выход
                 BufferedWriter bufWrite = new BufferedWriter(writer);
                 String buf = bufRead.readLine();
                 while (buf != null) {
@@ -87,11 +85,6 @@ public class Cutter {
     }
 
     public void recode(String inputName, String outputName) throws IOException {
-        //if (inputName.equals(""))
-
-        //пока не понимаю, как поставить условие так, чтобы можно было вводить/выводить текст с консоли.
-        //и будет ли такой способ (как в примере) работать
-
         try (FileInputStream inputStream = new FileInputStream(inputName)) {
             try (FileOutputStream outputStream = new FileOutputStream(outputName)) {
                 recode(inputStream, outputStream);
