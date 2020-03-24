@@ -8,40 +8,7 @@ import org.kohsuke.args4j.Option;
 import java.io.File;
 import java.io.IOException;
     public class CutterLauncher {
-        private int k;
-
-        @Option(name = "-o", metaVar = "OutputName", required = true, usage = "Output file name")
-        private File out = new File(".");
-
-        @Option(name = "-c", metaVar = "Work with Symbols", usage = "Working with Symbols", forbids={"-w"})
-        private boolean c = false;
-
-        @Option(name = "-w", metaVar = "Work with Words",  usage = "Working with Words", forbids={"-c"})
-        private boolean w = false;
-
-        @Argument(metaVar = "InputName", usage = "Input file name")
-        private File in = new File(".");
-
-
-        @Option(required = true, metaVar = "range", name="-r", usage = "range of cutting")
-        private void range(String range){
-            this.k=-Integer.parseInt(range);
-        }
-
-        //как правильно указывать все ето? через конструктор в каттере ведь?
-        //но что делать с всякими переменными, получаемыми из  range?
-
         void launch(String[] args) {
-            CmdLineParser parser = new CmdLineParser(this);
-            try {
-                parser.parseArgument(args);
-                //вооот тут
-            } catch (CmdLineException e) {
-                System.err.println(e.getMessage());
-                System.err.println("java -jar Cut.jar InputFile -o OutputName -c or -w range");
-                parser.printUsage(System.err);
-                return;
-            }
             try {
                 String[] r = range.split("-");
                 int opening = 0;
