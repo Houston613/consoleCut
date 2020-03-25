@@ -1,16 +1,20 @@
 package UtilityCut;
 
-import java.io.*;
 
 public class Cutter {
-    private boolean symbol;
-    //если флаг -w - true, то работа посимвольно
-    private boolean isEnd;
-    private boolean isStart;
     private int opening;
     private int ending;
+    private boolean isEnd;
+    private boolean isStart;
+    private boolean symbol;
 
-//вроде неправильно создан конструктор. но как мне всякие isEnd объявить, если их значения в лаунчере задаются?
+    public Cutter( int opening,int ending,boolean isEnd,boolean isStart,boolean symbol) {
+        this.symbol = symbol;
+        this.isStart = isStart;
+        this.isEnd = isEnd;
+        this.ending = ending;
+        this.opening = opening;
+    }
     public int checker(int length,boolean check){
         int start;
         int end;
@@ -31,7 +35,7 @@ public class Cutter {
             end = length - 1;
         } else {
             end = -1;
-            start =-1;
+            start = -1;
             //null я не могу нормально возвращать, но думаю и так сойдет
             //такой случай может быть только если границы меньше
             //всякие исключения еще "на подходе" отпадут и тут будут только числа
@@ -42,8 +46,7 @@ public class Cutter {
         else return end;
     }
 
-    public String cutting(String lines) {
-        //значения начала и конца могут не подаваться в метод, поэтому нужно записать их вот так
+    public  String cutting(String lines) {
         StringBuilder line = new StringBuilder();
         int length;
         if (symbol) {
@@ -53,6 +56,7 @@ public class Cutter {
             else
             line.append(lines,checker(length,true),checker(length,false));
             //append сказал что можно без цикла, а я и не против
+
         } else {
             String[] listOfWords = lines.split(" ");
             length = listOfWords.length;
@@ -65,30 +69,6 @@ public class Cutter {
         return line.toString();
     }
 
-    public void recode(InputStream in, OutputStream out) throws IOException {
-        try (InputStreamReader reader = new InputStreamReader(in)){
-            PrintStream out = new PrintStream(new File("output.txt"))
-            try (OutputStreamWriter writer = new OutputStreamWriter(out)) {
-                BufferedReader bufRead = new BufferedReader(reader);
-                //вот тут неймы или выход
-                BufferedWriter bufWrite = new BufferedWriter(writer);
-                String buf = bufRead.readLine();
-                while (buf != null) {
-                    bufWrite.write(cutting(buf));
-                    bufWrite.newLine();
-                    //мне же нужно ето или он автоматом перехдит?
-                    //убрал лист, понял что есть же writer
-                    buf = bufRead.readLine();
-                }
-            }
-        }
-    }
 
-    public void recode(String inputName, String outputName) throws IOException {
-        try (FileInputStream inputStream = new FileInputStream(inputName)) {
-            try (FileOutputStream outputStream = new FileOutputStream(outputName)) {
-                recode(inputStream, outputStream);
-            }
-        }
-    }
+
 }
