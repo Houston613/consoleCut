@@ -51,7 +51,7 @@ public class Cutter {
         int length;
         if (symbol) {
             length = lines.length();
-            if ((checker(length,true)==-1)||(checker(length,false)==-1))
+            if ((checker(length,true)==-1)&&(checker(length,false)==-1))
                 line.append(lines);
             else
             line.append(lines,checker(length,true),checker(length,false));

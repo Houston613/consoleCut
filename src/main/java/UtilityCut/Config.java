@@ -6,6 +6,7 @@ import org.kohsuke.args4j.CmdLineParser;
 import org.kohsuke.args4j.Option;
 
 import java.io.File;
+import java.io.IOException;
 
 public class Config {
     private boolean symbol;
@@ -47,7 +48,7 @@ public class Config {
             this.ending = Integer.parseInt(range.split("-")[1]);
             this.isEnd = true;
             this.isStart = true;
-        }
+        } else throw new IllegalArgumentException("range is wrong");
     }
 
     public Config(String[] args) {
@@ -62,9 +63,12 @@ public class Config {
             System.err.println(e.getMessage());
             System.err.println("java -jar Cut.jar InputFile -o OutputName -c or -w range");
             parser.printUsage(System.err);
-            throw new IllegalArgumentException();
+            if (!w && !c) {
+                throw new IllegalArgumentException();// не знаю, какая ошибка должна быть, и нужна ли она вообще?
+            }
         }
     }
+
     public int getOpening(){
         return opening;
     }
