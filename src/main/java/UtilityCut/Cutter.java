@@ -68,7 +68,4 @@ public class Cutter {
         }
         return line.toString();
     }
-
-
-
 }

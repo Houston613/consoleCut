@@ -8,7 +8,6 @@ public class Main {
             Config config = new Config(args);
 
             boolean symbol = config.getSymbol();
-            //если флаг -w - true, то работа po slovam
             boolean isEnd = config.getIsEnd();
             boolean isStart = config.getIStart();
             int opening = config.getOpening();
@@ -24,8 +23,8 @@ public class Main {
             e.printStackTrace();
         }
         //сначала создаю конфиг-конструктор отдельно, там собираю все переменные
-        //создаю читалку, она переписывает мой текст в ОТДЕЛЬНЫЙ файл
-        //каттер обрабатывает и перезаписывает этот файл
-        //райтер читает файл и выводит или на консоль, или просто этот файл
+        //создаю читалку
+        //каттер обрабатывает и записывает в этот файл
+        // райтер читает файл и выводит или на консоль, или просто этот файл
         }
     }

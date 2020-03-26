@@ -25,7 +25,6 @@ public class ReaderAndWriter {
             File input = new File(inputName);
             in = new FileInputStream(input);
         }
-        System.setIn(in);
         System.setOut(out);
         try (BufferedReader bufRead = new BufferedReader(new InputStreamReader(in))) {
 
