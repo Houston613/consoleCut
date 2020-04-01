@@ -8,7 +8,7 @@ public class Cutter {
     private boolean isStart;
     private boolean symbol;
 
-    public Cutter( int opening,int ending,boolean isEnd,boolean isStart,boolean symbol) {
+    public Cutter(int opening,int ending,boolean isEnd,boolean isStart,boolean symbol) {
         this.symbol = symbol;
         this.isStart = isStart;
         this.isEnd = isEnd;
@@ -48,22 +48,23 @@ public class Cutter {
 
     public  String cutting(String lines) {
         StringBuilder line = new StringBuilder();
-        int length;
-        if (symbol) {
-            length = lines.length();
-            if ((checker(length,true)==-1)&&(checker(length,false)==-1))
-                line.append(lines);
-            else
-            line.append(lines,checker(length,true),checker(length,false));
-            //append сказал что можно без цикла, а я и не против
-
-        } else {
-            String[] listOfWords = lines.split(" ");
-            length = listOfWords.length;
-            while (checker(length,true) >= checker(length,false)) {
-                line.append(listOfWords[checker(length,false)]);
-                length--;
-                //добавяю с конца, checker(length,false) будет каждый раз уменьшаться
+        int length = lines.length();
+        if ((checker(length, true) == -1) && (checker(length, false) == -1))
+            line.append(lines);
+        else {
+            if (symbol)
+                line.append(lines,checker(length,true),checker(length,false));
+                //append сказал что можно без цикла, а я и не против
+            else {
+                String[] listOfWords = lines.split(" ");
+                length = listOfWords.length;
+                while (checker(length,true) >= checker(length,false)) {
+                    line.append(listOfWords[checker(length,false)]);
+                    length--;
+                    if (checker(length,false)==-1)
+                        break;
+                    //добавяю с конца, checker(length,false) будет каждый раз уменьшаться
+                }
             }
         }
         return line.toString();

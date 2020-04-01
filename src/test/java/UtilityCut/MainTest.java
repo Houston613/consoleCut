@@ -13,10 +13,11 @@ class MainTest {
     @Test
     @Beta
     public void firstTest() throws IOException {
-        String[] args = {"-c","-o","test/resources/output/output1.txt","test/resources/input/input1.txt","-2"};
+        String[] args = {"-c","-o","./src/test/resources/output/output1.txt","./src/test/resources/input/input1.txt","-2"};
         Main.main(args);
-        File test = new File("test/resources/tesFiles/test1.txt");
-        File out = new File("test/resources/output/output1.txt");
+        File test = new File("./src/test/resources/tesFiles/test1.txt");
+        File out = new File("./src/" +
+                "test/resources/output/output1.txt");
         assertTrue(Files.equal(test,out));
     }
 }

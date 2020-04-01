@@ -6,7 +6,6 @@ import org.kohsuke.args4j.CmdLineParser;
 import org.kohsuke.args4j.Option;
 
 import java.io.File;
-import java.io.IOException;
 
 public class Config {
     private boolean symbol;
@@ -33,23 +32,23 @@ public class Config {
 
 
     @Option(required = true, metaVar = "range", name = "-r", usage = "range of cutting")
-    private void range(String range) {
-        if (range.matches("-[0-9]+")) {
-            this.ending = -Integer.parseInt(range);
-            this.isEnd = true;
-            this.isStart = false;
-        } else if (range.matches("[0-9]+-")) {
-            this.opening = Integer.parseInt(range.replaceAll("-", ""));
-            this.isEnd = false;
-            //определится позже в чекере, тк не знаем пока длину строки
-            this.isStart = true;
-        } else if (range.matches("[0-9]+-[0-9]+")) {
-            this.opening = Integer.parseInt(range.split("-")[0]);
-            this.ending = Integer.parseInt(range.split("-")[1]);
-            this.isEnd = true;
-            this.isStart = true;
-        } else throw new IllegalArgumentException("range is wrong");
-    }
+        private void range (String range){
+            if (range.matches("-[0-9]+")) {
+                this.ending = -Integer.parseInt(range);
+                this.isEnd = true;
+                this.isStart = false;
+            } else if (range.matches("[0-9]+-")) {
+                this.opening = Integer.parseInt(range.replaceAll("-", ""));
+                this.isEnd = false;
+                //определится позже в чекере, тк не знаем пока длину строки
+                this.isStart = true;
+            } else if (range.matches("[0-9]+-[0-9]+")) {
+                this.opening = Integer.parseInt(range.split("-")[0]);
+                this.ending = Integer.parseInt(range.split("-")[1]);
+                this.isEnd = true;
+                this.isStart = true;
+            } else throw new IllegalArgumentException("range is wrong");
+        }
 
     public Config(String[] args) {
         CmdLineParser parser = new CmdLineParser(this);

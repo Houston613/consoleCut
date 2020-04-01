@@ -6,7 +6,6 @@ public class Main {
     public static void main(String[] args) throws IOException {
         try {
             Config config = new Config(args);
-
             boolean symbol = config.getSymbol();
             boolean isEnd = config.getIsEnd();
             boolean isStart = config.getIStart();
