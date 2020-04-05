@@ -56,8 +56,7 @@ public class Config {
             parser.parseArgument(args);
             this.inputName = in.getName();
             this.outputName = out.getName();
-            if (w)
-                this.symbol = false;
+            this.symbol = !w;
         } catch (CmdLineException e) {
             System.err.println(e.getMessage());
             System.err.println("java -jar Cut.jar InputFile -o OutputName -c or -w range");

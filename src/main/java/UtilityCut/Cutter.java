@@ -58,12 +58,10 @@ public class Cutter {
             else {
                 String[] listOfWords = lines.split(" ");
                 length = listOfWords.length;
-                while (checker(length,true) >= checker(length,false)) {
-                    line.append(listOfWords[checker(length,false)]);
-                    length--;
-                    if (checker(length,false)==-1)
-                        break;
-                    //добавяю с конца, checker(length,false) будет каждый раз уменьшаться
+                for (int i = checker(length,true);i<=checker(length,false);i++){
+                    line.append(listOfWords[i]);
+                    if (i!=checker(length,false))
+                        line.append(" ");
                 }
             }
         }

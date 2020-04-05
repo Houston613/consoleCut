@@ -27,11 +27,9 @@ public class ReaderAndWriter {
         }
         System.setOut(out);
         try (BufferedReader bufRead = new BufferedReader(new InputStreamReader(in))) {
-
             String buf = bufRead.readLine();
             while (buf != null) {
                 System.out.println(cutter.cutting(buf));
-                System.out.println(System.lineSeparator());
                 buf = bufRead.readLine();
             }
             in.close();
