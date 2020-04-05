@@ -19,19 +19,19 @@ public class Cutter {
         int start;
         int end;
         if ((isEnd && isStart) && (opening < length)){
-            start = opening;
+            start = opening-1;
                 if (ending < length)
-                    end = ending;
+                    end = ending-1;
                 else
                     end = length-1;
         } else if ((isEnd && !isStart)) {
             start = 0;
             if (ending < length)
-                end = ending;
+                end = ending-1;
             else
                 end = length-1;
         } else if ((!isEnd && isStart) && (opening < length)) {
-            start = opening;
+            start = opening-1;
             end = length - 1;
         } else {
             end = -1;
