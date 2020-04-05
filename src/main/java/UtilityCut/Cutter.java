@@ -33,7 +33,8 @@ public class Cutter {
         } else if ((!isEnd && isStart) && (opening < length)) {
             start = opening-1;
             end = length - 1;
-        } else {
+        }
+        else {
             end = -1;
             start = -1;
             //null я не могу нормально возвращать, но думаю и так сойдет
@@ -58,6 +59,9 @@ public class Cutter {
             else {
                 String[] listOfWords = lines.split(" ");
                 length = listOfWords.length;
+                if ((checker(length, true) == -1) && (checker(length, false) == -1))
+                    line.append(listOfWords[0]);
+                else
                 for (int i = checker(length,true);i<=checker(length,false);i++){
                     line.append(listOfWords[i]);
                     if (i!=checker(length,false))
