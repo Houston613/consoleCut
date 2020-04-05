@@ -3,7 +3,7 @@ package UtilityCut;
 import java.io.*;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         try {
             Config config = new Config(args);
             boolean symbol = config.getSymbol();
@@ -21,9 +21,5 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //сначала создаю конфиг-конструктор отдельно, там собираю все переменные
-        //создаю читалку
-        //каттер обрабатывает и записывает в этот файл
-        // райтер читает файл и выводит или на консоль, или просто этот файл
-        }
     }
+}
