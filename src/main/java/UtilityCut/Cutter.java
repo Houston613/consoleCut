@@ -2,11 +2,11 @@ package UtilityCut;
 
 
 public class Cutter {
-    private int opening;
-    private int ending;
-    private boolean isEnd;
-    private boolean isStart;
-    private boolean symbol;
+    private final int opening;
+    private final int ending;
+    private final boolean isEnd;
+    private final boolean isStart;
+    private final boolean symbol;
 
     public Cutter(int opening,int ending,boolean isEnd,boolean isStart,boolean symbol) {
         this.symbol = symbol;
@@ -15,15 +15,15 @@ public class Cutter {
         this.ending = ending;
         this.opening = opening;
     }
-    public int checker(int length,boolean check){
+    private int checker(int length,boolean check){
         int start;
         int end;
         if ((isEnd && isStart) && (opening < length)){
             start = opening-1;
-                if (ending < length)
-                    end = ending-1;
-                else
-                    end = length-1;
+            if (ending < length)
+                end = ending-1;
+            else
+                end = length-1;
         } else if ((isEnd && !isStart)) {
             start = 0;
             if (ending < length)
@@ -50,24 +50,18 @@ public class Cutter {
     public  String cutting(String lines) {
         StringBuilder line = new StringBuilder();
         int length = lines.length();
-        if ((checker(length, true) == -1) && (checker(length, false) == -1))
-            line.append(lines);
+        if (symbol)
+            line.append(lines,checker(length,true),checker(length,false)+1);
+            //append сказал что можно без цикла, а я и не против
         else {
-            if (symbol)
-                line.append(lines,checker(length,true),checker(length,false));
-                //append сказал что можно без цикла, а я и не против
-            else {
-                String[] listOfWords = lines.split(" ");
-                length = listOfWords.length;
-                if ((checker(length, true) == -1) && (checker(length, false) == -1))
-                    line.append(listOfWords[0]);
-                else
+            String[] listOfWords = lines.split(" ");
+            length = listOfWords.length;
+            if ((checker(length, true) != -1) && (checker(length, false) != -1))
                 for (int i = checker(length,true);i<=checker(length,false);i++){
                     line.append(listOfWords[i]);
                     if (i!=checker(length,false))
                         line.append(" ");
                 }
-            }
         }
         return line.toString();
     }

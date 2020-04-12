@@ -6,19 +6,16 @@ import org.kohsuke.args4j.CmdLineParser;
 import org.kohsuke.args4j.Option;
 
 import java.io.File;
+import java.nio.file.Path;
 
 public class Config {
-    private boolean symbol;
-    //если флаг -w - true, то работа po slovam
     private boolean isEnd;
     private boolean isStart;
     private int opening;
     private int ending;
-    private String inputName;
-    private String outputName;
 
 
-    @Option(name = "-o", metaVar = "OutputName", required = true, usage = "Output file name")
+    @Option(name = "-o", metaVar = "OutputName", usage = "Output file name")
     private File out = new File(".");
 
     @Option(name = "-c", metaVar = "Work with Symbols", usage = "Working with Symbols", forbids = {"-w"})
@@ -32,41 +29,43 @@ public class Config {
 
 
     @Option(required = true, metaVar = "range", name = "-r", usage = "range of cutting")
-        private void range (String range){
-            if (range.matches("-[0-9]+")) {
-                this.ending = -Integer.parseInt(range);
-                this.isEnd = true;
-                this.isStart = false;
-            } else if (range.matches("[0-9]+-")) {
-                this.opening = Integer.parseInt(range.replaceAll("-", ""));
-                this.isEnd = false;
-                //определится позже в чекере, тк не знаем пока длину строки
-                this.isStart = true;
-            } else if (range.matches("[0-9]+-[0-9]+")) {
-                this.opening = Integer.parseInt(range.split("-")[0]);
-                this.ending = Integer.parseInt(range.split("-")[1]);
-                this.isEnd = true;
-                this.isStart = true;
-            } else throw new IllegalArgumentException("range is wrong");
-        }
+    private void range (String range) throws IllegalAccessException {
+        if (range.matches("-[0-9]+")) {
+            this.ending = -Integer.parseInt(range);
+            this.isEnd = true;
+            this.isStart = false;
+        } else if (range.matches("[0-9]+-")) {
+            this.opening = Integer.parseInt(range.replaceAll("-", ""));
+            this.isEnd = false;
+            //определится позже в чекере, тк не знаем пока длину строки
+            this.isStart = true;
+        } else if (range.matches("[0-9]+-[0-9]+")) {
+            this.opening = Integer.parseInt(range.split("-")[0]);
+            this.ending = Integer.parseInt(range.split("-")[1]);
+            this.isEnd = true;
+            this.isStart = true;
+            if (opening>ending)
+                throw new IllegalArgumentException("range is wrong");
+        } else throw new IllegalArgumentException("range is wrong");
+    }
 
     public Config(String[] args) {
         CmdLineParser parser = new CmdLineParser(this);
         try {
             parser.parseArgument(args);
-            this.inputName = in.getName();
-            this.outputName = out.getName();
-            this.symbol = !w;
+            if (!w && !c) {
+                throw new IllegalArgumentException();// не знаю, какая ошибка должна быть, и нужна ли она вообще?
+            }
         } catch (CmdLineException e) {
             System.err.println(e.getMessage());
             System.err.println("java -jar Cut.jar InputFile -o OutputName -c or -w range");
             parser.printUsage(System.err);
-            if (!w && !c) {
-                throw new IllegalArgumentException();// не знаю, какая ошибка должна быть, и нужна ли она вообще?
-            }
+
         }
     }
-
+    public File getInput(){return in;}
+    public File getOut(){return out;}
+    public boolean getSymbol(){return c;}
     public int getOpening(){
         return opening;
     }
@@ -78,14 +77,5 @@ public class Config {
     }
     public boolean getIStart(){
         return isStart;
-    }
-    public boolean getSymbol(){
-        return symbol;
-    }
-    public String getInputName(){
-        return inputName;
-    }
-    public String getOutputName(){
-        return outputName;
     }
 }

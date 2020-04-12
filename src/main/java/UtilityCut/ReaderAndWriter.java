@@ -3,26 +3,23 @@ package UtilityCut;
 import java.io.*;
 
 public class ReaderAndWriter {
-    String inputName;
-    String outputName;
-    Cutter cutter;
-    PrintStream out;
-    public ReaderAndWriter(String inputName, String outputName, Cutter cutter){
+    private final Cutter cutter;
+
+    public ReaderAndWriter(Cutter cutter){
         this.cutter = cutter;
-        this.inputName = inputName;
-        this.outputName = outputName;
     }
-    public void RaW(String inputName, String outputName) throws IOException {
-        if (outputName.equals(".")) {
+    public void readingAndWriting(File inputName, File outputName) throws IOException {
+        PrintStream out;
+        if (outputName.getPath().equals(".")) {
             out = System.out;
         } else {
-            out = new PrintStream(new File(outputName));
+            out = new PrintStream(new File(outputName.getPath()));
         }
         InputStream in;
-        if (inputName.equals(".")) {//если имя не изменилось
+        if (inputName.getPath().equals(".")) {//если имя не изменилось
             in = System.in;
         } else {
-            File input = new File(inputName);
+            File input = new File(inputName.getPath());
             in = new FileInputStream(input);
         }
         System.setOut(out);
@@ -32,7 +29,6 @@ public class ReaderAndWriter {
                 System.out.println(cutter.cutting(buf));
                 buf = bufRead.readLine();
             }
-            in.close();
         }
     }
 }

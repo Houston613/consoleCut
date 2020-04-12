@@ -12,13 +12,56 @@ import static org.junit.jupiter.api.Assertions.*;
 class MainTest {
     @Test
     @Beta
-    public void firstTest() throws IOException {
-        String[] args = {"-c","-o","./src/test/resources/output/output1.txt","./src/test/resources/input/input1.txt","-2"};
+    public void testForC() throws IOException {
+        String[] args = {"./src/test/resources/input/input1.txt", "-c", "-o", "src/test/resources/output/out1.txt", "-r", "-2"};
         Main.main(args);
-        File test = new File("./src/test/resources/tesFiles/test1.txt");
+        File test = new File("./src/test/resources/testFiles/test1.txt");
         File out = new File("./src/" +
-                "test/resources/output/output1.txt");
+                "test/resources/output/out1.txt");
+        assertTrue(Files.equal(test, out));
+    }
+    @Test
+    public void testForW() throws IOException {
+        String[] args = {"./src/test/resources/input/input1.txt","-w","-o","src/test/resources/output/out2.txt","-r","-2"};
+        Main.main(args);
+        File test = new File("./src/test/resources/testFiles/test2.txt");
+        File out = new File("./src/" +
+                "test/resources/output/out2.txt");
         assertTrue(Files.equal(test,out));
+    }
+    @Test
+    public void testForConsoleOut(){
+        /*UNDER CONSTRUCTION
+         * как проверить, что вывод на консоль совпадает с тестовым файлом?
+         */
+        String[] args = {"./src/test/resources/input/input1.txt","-w","-o","src/test/resources/output/out2.txt","-r","-2"};
+    }
+    @Test
+    public void testForConsoleInput() throws IOException {
+        /*UNDER CONSTRUCTION
+         * как проверить то, что ввод с консоли работает? там же ничего не кидается
+         */
+        String[] args = {"-w","-o","src/test/resources/output/out3.txt","-r","5-"};
+        Main.main(args);
+        File test = new File("./src/test/resources/testFiles/teest3.txt");
+        File out = new File("./src/" +
+                "test/resources/output/out3.txt");
+        assertTrue(Files.equal(test,out));
+    }
+
+    @Test
+    public void testForRange() {
+        String[] args = {"./src/test/resources/input/input1.txt","-w","-o","src/test/resources/output/out2.txt","-r","10-2"};
+        assertThrows(IllegalArgumentException.class,()->UtilityCut.Main.main(args));
+    }
+    @Test
+    public void testForRequired() {
+        String[] args = {"./src/test/resources/input/input1.txt","-o","src/test/resources/output/out2.txt","-r","2-10"};
+        assertThrows(IllegalArgumentException.class,()->UtilityCut.Main.main(args));
+        /*UNDER CONSTRUCTION
+        * как проверить ошибку парсера? там же ничего не кидается
+         */
+        String[] argsR = {"./src/test/resources/input/input1.txt","-w","-o", "src/test/resources/output/out2.txt", "-r"};
     }
 }
 
