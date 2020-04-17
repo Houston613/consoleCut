@@ -4,7 +4,7 @@ plugins {
 jar {
     manifest {
         attributes("Manifest-Version": "1.0",
-                "Main-Class": "recode.RecoderLauncher");
+                "Main-Class": "UtilityCut.Main");
     }
 }
 task fatJar(type: Jar) {

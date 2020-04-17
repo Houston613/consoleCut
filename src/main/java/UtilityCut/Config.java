@@ -60,7 +60,7 @@ public class Config {
             System.err.println(e.getMessage());
             System.err.println("java -jar Cut.jar InputFile -o OutputName -c or -w range");
             parser.printUsage(System.err);
-
+            throw new IllegalArgumentException();
         }
     }
     public File getInput(){return in;}
