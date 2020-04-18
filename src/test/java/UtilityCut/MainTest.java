@@ -29,25 +29,10 @@ class MainTest {
                 "test/resources/output/out2.txt");
         assertTrue(Files.equal(test,out));
     }
-    @Test
-    public void testForConsoleOut(){
-        /*UNDER CONSTRUCTION
-         * как проверить, что вывод на консоль совпадает с тестовым файлом?
-         */
-        String[] args = {"./src/test/resources/input/input1.txt","-w","-o","src/test/resources/output/out2.txt","-r","-2"};
-    }
-    @Test
-    public void testForConsoleInput() throws IOException {
-        /*UNDER CONSTRUCTION
-         * как проверить то, что ввод с консоли работает? там же ничего не кидается
-         */
-        String[] args = {"-w","-o","src/test/resources/output/out3.txt","-r","5-"};
-        Main.main(args);
-        File test = new File("./src/test/resources/testFiles/teest3.txt");
-        File out = new File("./src/" +
-                "test/resources/output/out3.txt");
-        assertTrue(Files.equal(test,out));
-    }
+    /*UNDER CONSTRUCTION
+    *public void testForConsoleOutAndInput(){
+    проверно на jar
+    */
 
     @Test
     public void testForRange() {

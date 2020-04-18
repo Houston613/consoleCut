@@ -37,10 +37,6 @@ public class Cutter {
         else {
             end = -1;
             start = -1;
-            //null я не могу нормально возвращать, но думаю и так сойдет
-            //такой случай может быть только если границы меньше
-            //всякие исключения еще "на подходе" отпадут и тут будут только числа
-            //если нет границ, добавляю целую строку
         }
         if (check)
             return start;
@@ -52,15 +48,15 @@ public class Cutter {
         int length = lines.length();
         if (symbol)
             line.append(lines,checker(length,true),checker(length,false)+1);
-            //append сказал что можно без цикла, а я и не против
         else {
             String[] listOfWords = lines.split(" ");
             length = listOfWords.length;
+
             if ((checker(length, true) != -1) && (checker(length, false) != -1))
-                for (int i = checker(length,true);i<=checker(length,false);i++){
+                for (int i = checker(length,true); i<=checker(length,false);i++){
                     line.append(listOfWords[i]);
                     if (i!=checker(length,false))
-                        line.append(" ");
+                        line.append(" "); 
                 }
         }
         return line.toString();

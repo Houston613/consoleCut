@@ -58,7 +58,7 @@ public class Config {
             }
         } catch (CmdLineException e) {
             System.err.println(e.getMessage());
-            System.err.println("java -jar Cut.jar InputFile -o OutputName -c or -w range");
+            System.err.println("java -jar Cut.jar InputFile -o OutputName -c or -w range -r -[0-9]|");
             parser.printUsage(System.err);
             throw new IllegalArgumentException();
         }
