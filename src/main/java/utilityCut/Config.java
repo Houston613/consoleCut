@@ -1,4 +1,4 @@
-package UtilityCut;
+package utilityCut;
 
 import org.kohsuke.args4j.Argument;
 import org.kohsuke.args4j.CmdLineException;
@@ -6,7 +6,6 @@ import org.kohsuke.args4j.CmdLineParser;
 import org.kohsuke.args4j.Option;
 
 import java.io.File;
-import java.nio.file.Path;
 
 public class Config {
     private boolean isEnd;

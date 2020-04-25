@@ -1,4 +1,4 @@
-package UtilityCut;
+package utilityCut;
 
 
 public class Cutter {

@@ -1,8 +1,9 @@
-package UtilityCut;
+package utilityCut;
 
 import com.google.common.annotations.Beta;
 import com.google.common.io.*;
 import org.junit.jupiter.api.Test;
+
 
 import java.io.File;
 import java.io.IOException;
@@ -37,12 +38,12 @@ class MainTest {
     @Test
     public void testForRange() {
         String[] args = {"./src/test/resources/input/input1.txt","-w","-o","src/test/resources/output/out2.txt","-r","10-2"};
-        assertThrows(IllegalArgumentException.class,()->UtilityCut.Main.main(args));
+        assertThrows(IllegalArgumentException.class,()-> utilityCut.Main.main(args));
     }
     @Test
     public void testForRequired() {
         String[] args = {"./src/test/resources/input/input1.txt","-o","src/test/resources/output/out2.txt","-r","2-10"};
-        assertThrows(IllegalArgumentException.class,()->UtilityCut.Main.main(args));
+        assertThrows(IllegalArgumentException.class,()-> utilityCut.Main.main(args));
         /*UNDER CONSTRUCTION
         * как проверить ошибку парсера? там же ничего не кидается
          */
